@@ -1,0 +1,18 @@
+export const skills: string[] = [
+  'JavaScript',
+  'TypeScript',
+  'React',
+  'Node.js',
+  'Express',
+  'MongoDB',
+  'PostgreSQL',
+  'GraphQL',
+  'Docker',
+  'Kubernetes',
+  'AWS',
+  'Azure',
+  'GCP',
+  'Python',
+  'Machine Learning',
+  'Deep Learning',
+];

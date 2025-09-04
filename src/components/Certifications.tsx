@@ -1,24 +1,7 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import { certifications } from '../data/certifications';
 
 const Certifications = () => {
-  const certifications = [
-    {
-      name: 'AWS Certified Machine Learning Specialist',
-      organization: 'Amazon Web Services',
-      date: '2023',
-    },
-    {
-      name: 'Google Cloud Certified Professional Data Engineer',
-      organization: 'Google Cloud',
-      date: '2022',
-    },
-    {
-      name: 'Microsoft Certified Azure AI Engineer',
-      organization: 'Microsoft',
-      date: '2021',
-    },
-  ];
 
   return (
     <motion.div

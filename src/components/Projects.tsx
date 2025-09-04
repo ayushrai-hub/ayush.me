@@ -1,24 +1,20 @@
-import React from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import { projects as projectsData } from '../data/projects';
 
 const Projects = () => {
-  const projects = [
-    {
-      name: 'AI Chatbot',
-      description: 'A chatbot powered by AI to assist users with their queries.',
-      link: '#',
-    },
-    {
-      name: 'E-commerce Platform',
-      description: 'A full-fledged e-commerce platform with user authentication and payment gateway.',
-      link: '#',
-    },
-    {
-      name: 'Data Analysis Tool',
-      description: 'A tool to analyze large datasets and generate insights.',
-      link: '#',
-    },
-  ];
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set(projectsData.map((p) => p.category)));
+    return ['All', ...unique];
+  }, []);
+
+  const filtered = useMemo(() => {
+    return activeCategory === 'All'
+      ? projectsData
+      : projectsData.filter((p) => p.category === activeCategory);
+  }, [activeCategory]);
 
   return (
     <motion.div
@@ -40,13 +36,41 @@ const Projects = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
+          className="mb-8 flex flex-wrap items-center justify-center gap-2"
+        >
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setActiveCategory(cat)}
+              className={`px-3 py-1.5 text-sm rounded-full border focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue transition-colors ${
+                activeCategory === cat
+                  ? 'bg-electric-blue text-gray-900 border-electric-blue'
+                  : 'border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'
+              }`}
+              aria-pressed={activeCategory === cat}
+            >
+              {cat}
+            </button>
+          ))}
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          {projects.map((project, index) => (
+          {filtered.map((project, index) => (
             <div key={index} className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
-              <h3 className="font-inter text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">{project.name}</h3>
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="font-inter text-lg font-semibold text-gray-700 dark:text-gray-300">{project.name}</h3>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200">{project.category}</span>
+              </div>
               <p className="font-inter text-gray-700 dark:text-gray-300">{project.description}</p>
-              <a href={project.link} className="text-electric-blue hover:text-blue-500 transition duration-300 mt-4 inline-block">
+              <a
+                href={project.link}
+                className="text-electric-blue hover:text-blue-500 transition duration-300 mt-4 inline-block"
+              >
                 Learn More
               </a>
             </div>

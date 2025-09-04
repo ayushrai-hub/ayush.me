@@ -2,25 +2,25 @@
 
 ---
 
-## ✅ Pre-Development
+## Pre-Development
 
 - [x] Define project scope and requirements (PRD completed).
 - [x] Choose the technology stack (Next.js, Tailwind CSS, TypeScript, Framer Motion).
 - [x] Create sitemap and wireframes.
 - [x] Set up version control (Git & GitHub).
-- [ ] Define folder architecture and coding standards.
+- [x] Define folder architecture and coding standards.
 - [ ] Configure CI/CD pipeline (Vercel/Netlify + GitHub Actions).
 - [ ] Set up environment variables (API keys, CMS credentials).
 - [ ] Install and configure dependencies (Next.js, Tailwind, Framer Motion, Three.js, Chart.js).
 
 ---
 
-## 🚀 Core Functionality
+## Core Functionality
 
 - [ ] **Hero Section**
-  - [ ] Dynamic text rotation for headlines.
-  - [ ] Animated counters for statistics.
-  - [ ] Status indicator component with color-coded labels.
+  - [x] Dynamic text rotation for headlines.
+  - [x] Animated counters for statistics.
+  - [x] Status indicator component with color-coded labels.
   - [ ] Animated particle/geometry background (Three.js/WebGL).
 
 - [ ] **About Me**
@@ -82,7 +82,7 @@
   - [ ] Carousel/card-based testimonial design.
 
 - [ ] **Dynamic Resume**
-  - [ ] Download feature (PDF/Word).
+  - [x] Download feature (PDF/Word).
   - [ ] Real-time update sync with CMS.
 
 - [ ] **Contact Section**
@@ -93,12 +93,12 @@
 
 ---
 
-## 🎨 Design & UI/UX
+## Design & UI/UX
 
 - [ ] Apply theme (Minimalist-Technical Fusion).
 - [ ] Implement color palette (deep navy, electric blue, neon green, purple gradient, white, gray).
 - [ ] Typography: Headers (Inter/Poppins), Code (JetBrains Mono), Body (System UI).
-- [ ] Smooth scrolling (Locomotive Scroll).
+- [x] Smooth scrolling (baseline; CSS smooth scroll).
 - [ ] Micro-interactions (hover, focus states).
 - [ ] Framer Motion animations for section transitions.
 - [ ] Gradient overlay animations.
@@ -112,7 +112,7 @@
 - [ ] Lazy load images and components.
 - [ ] Optimize assets and code splitting.
 - [ ] Configure CDN for static assets.
-- [ ] Add meta tags (title, description, OpenGraph).
+- [x] Add meta tags (title, description, OpenGraph).
 - [ ] Structured data markup (JSON-LD).
 - [ ] Generate sitemap.xml and robots.txt.
 - [ ] Lighthouse audit with high performance score.

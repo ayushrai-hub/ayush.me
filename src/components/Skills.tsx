@@ -1,25 +1,7 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import { skills } from '../data/skills';
 
 const Skills = () => {
-  const skills = [
-    'JavaScript',
-    'TypeScript',
-    'React',
-    'Node.js',
-    'Express',
-    'MongoDB',
-    'PostgreSQL',
-    'GraphQL',
-    'Docker',
-    'Kubernetes',
-    'AWS',
-    'Azure',
-    'GCP',
-    'Python',
-    'Machine Learning',
-    'Deep Learning',
-  ];
 
   return (
     <motion.div

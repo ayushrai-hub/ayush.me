@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin, FileDown, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
+
+const CountUp: React.FC<{ to: number; duration?: number }> = ({ to, duration = 1200 }) => {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    let start: number | null = null;
+    let raf = 0;
+    const step = (ts: number) => {
+      if (start === null) start = ts;
+      const progress = Math.min(1, (ts - start) / duration);
+      setValue(Math.floor(progress * to));
+      if (progress < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [to, duration]);
+  return <span>{value}</span>;
+};
 
 const Hero = () => {
   return (
@@ -12,6 +29,15 @@ const Hero = () => {
       className="relative bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-50 py-20 min-h-screen flex items-center justify-center"
     >
       <div className="container mx-auto text-center">
+        <div className="mb-4 flex justify-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-50/70 dark:bg-emerald-500/10 px-3 py-1 text-sm text-emerald-700 dark:text-emerald-300">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            Open to opportunities
+          </span>
+        </div>
         <motion.h1
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -48,6 +74,27 @@ const Hero = () => {
           Polymath with Strategic Approach
         </motion.p>
         <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.1 }}
+          className="mb-10 flex items-center justify-center gap-3"
+        >
+          <a
+            href="https://drive.google.com/file/d/1oJlYWL4UAavvSwbjwwptoGWizPXjYtAn/view?usp=drive_link"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-md bg-electric-blue text-gray-900 px-4 py-2 font-medium shadow hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"
+          >
+            <FileDown size={18} /> Download Resume
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 rounded-md border border-gray-300 dark:border-gray-700 px-4 py-2 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"
+          >
+            <Mail size={18} /> Contact Me
+          </a>
+        </motion.div>
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 1.2 }}
@@ -60,6 +107,25 @@ const Hero = () => {
           <a href="tel:+917440567944" className="hover:text-electric-blue transition duration-300">
             +91-7440567944
           </a>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.3 }}
+          className="mb-10 grid grid-cols-3 max-w-md mx-auto gap-6 text-center"
+        >
+          <div>
+            <div className="text-3xl font-bold"><CountUp to={25} />+</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">Projects</div>
+          </div>
+          <div>
+            <div className="text-3xl font-bold"><CountUp to={3} />+</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">Years Exp</div>
+          </div>
+          <div>
+            <div className="text-3xl font-bold"><CountUp to={500} />+</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">Commits</div>
+          </div>
         </motion.div>
         <motion.div
           initial={{ opacity: 0 }}

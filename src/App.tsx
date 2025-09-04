@@ -7,26 +7,45 @@ import Projects from './components/Projects';
 import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Layout from './components/Layout';
+import Section from './components/Section';
 
 function App() {
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-50">
-      <Router>
+    <Router>
+      <Layout>
         <Routes>
-          <Route path="/" element={
-            <>
-              <Hero />
-              <About />
-              <Experience />
-              <Skills />
-              <Projects />
-              <Certifications />
-              <Contact />
-            </>
-          } />
+          <Route
+            path="/"
+            element={
+              <>
+                <Section id="hero">
+                  <Hero />
+                </Section>
+                <Section id="about">
+                  <About />
+                </Section>
+                <Section id="experience">
+                  <Experience />
+                </Section>
+                <Section id="skills">
+                  <Skills />
+                </Section>
+                <Section id="projects">
+                  <Projects />
+                </Section>
+                <Section id="certifications">
+                  <Certifications />
+                </Section>
+                <Section id="contact">
+                  <Contact />
+                </Section>
+              </>
+            }
+          />
         </Routes>
-      </Router>
-    </div>
+      </Layout>
+    </Router>
   );
 }
 
