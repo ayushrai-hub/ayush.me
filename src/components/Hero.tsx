@@ -133,10 +133,10 @@ const Hero = () => {
           transition={{ duration: 0.5, delay: 1.4 }}
           className="flex items-center justify-center space-x-4"
         >
-          <a href="https://github.com/ayushrai-hub" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition duration-300">
+          <a href="https://github.com/ayushrai-hub" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition duration-300" aria-label="GitHub">
             <Github size={32} />
           </a>
-          <a href="https://linkedin.com/in/ayushrai02" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition duration-300">
+          <a href="https://linkedin.com/in/ayushrai02" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition duration-300" aria-label="LinkedIn">
             <Linkedin size={32} />
           </a>
         </motion.div>

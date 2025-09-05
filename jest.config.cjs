@@ -6,6 +6,8 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '^react-type-animation$': '<rootDir>/src/components/__mocks__/react-type-animation.ts',
+    '^framer-motion$': '<rootDir>/src/components/__mocks__/framer-motion.ts',
   },
   transform: {
     '^.+\\.(ts|tsx)$': [
@@ -15,4 +17,5 @@ module.exports = {
   },
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
+  moduleDirectories: ['node_modules', 'src'],
 };

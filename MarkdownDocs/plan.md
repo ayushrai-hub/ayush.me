@@ -53,8 +53,9 @@
 - M4: Visualizations
   - Integrate lightweight charting for GPA/radar (Recharts or Chart.js) behind feature flag.
 - M5: Contact & Resume
-  - Accessible form with client validation; stub serverless endpoint.
-  - Resume download placeholder, later wire serverless.
+  - Accessible form with client + server validation (zod).
+  - Serverless: rate limit, CAPTCHA, spam filtering, secret management, audit logs, and safe email handling.
+  - Resume: signed URL or tokenized endpoint to deter scraping; cache headers.
 - M6: SEO/Perf/Accessibility
   - Full meta/OG/JSON-LD, sitemap/robots generation, lazy loading.
   - Pass basic Lighthouse checks; fix a11y findings.

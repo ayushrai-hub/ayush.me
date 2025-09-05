@@ -13,6 +13,7 @@ const sections = [
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
   { id: 'certifications', label: 'Certifications' },
+  { id: 'profiles', label: 'Profiles' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -58,12 +59,19 @@ const Navbar: React.FC<NavbarProps> = ({ dark, toggleDark }) => {
           ))}
         </ul>
         <button
+          type="button"
           aria-label="Toggle dark mode"
+          aria-pressed={dark}
           onClick={toggleDark}
           className="inline-flex items-center gap-2 rounded-md border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"
         >
-          {dark ? <Sun size={16} /> : <Moon size={16} />}
-          <span className="hidden sm:inline">{dark ? 'Light' : 'Dark'}</span>
+          {dark
+            ? <Sun size={16} aria-hidden="true" />
+            : <Moon size={16} aria-hidden="true" />
+          }
+          <span className="hidden sm:inline">
+            {dark ? 'Light' : 'Dark'}
+          </span>
         </button>
       </nav>
     </header>

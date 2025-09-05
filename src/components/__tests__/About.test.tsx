@@ -5,6 +5,6 @@ import About from '../About';
 describe('About', () => {
   test('renders heading', () => {
     renderWithProviders(<About />);
-    expect(screen.getByRole('heading', { name: /about me/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /seeker of growth/i })).toBeInTheDocument();
   });
 });

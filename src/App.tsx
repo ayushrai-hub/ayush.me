@@ -5,6 +5,7 @@ import Experience from './components/Experience';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Certifications from './components/Certifications';
+import Profiles from './components/Profiles';
 import Contact from './components/Contact';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
@@ -36,6 +37,9 @@ function App() {
                 </Section>
                 <Section id="certifications">
                   <Certifications />
+                </Section>
+                <Section id="profiles">
+                  <Profiles />
                 </Section>
                 <Section id="contact">
                   <Contact />

@@ -32,36 +32,53 @@ beforeAll(() => {
     })),
   });
 
-  // Suppress React 18 act() warnings
-  jest.spyOn(console, 'error').mockImplementation((...args) => {
-    // Ignore React 18 act() warnings and specific React Router warnings
+  // Mock requestAnimationFrame
+  global.requestAnimationFrame = (callback) => {
+    return window.setTimeout(callback, 0);
+  };
+  global.cancelAnimationFrame = (id) => {
+    clearTimeout(id);
+  };
+
+  // Suppress React 18 useEffect warnings in tests
+  const originalError = console.error;
+  console.error = (...args) => {
     if (
-      typeof args[0] === 'string' &&
-      (args[0].includes('Warning: An update to %s inside a test was not wrapped in act') ||
-        args[0].includes('Warning: ReactDOM.render is no longer supported in React 18'))
+      /Warning: React does not recognize the.*prop on a DOM element/.test(
+        args[0]
+      ) ||
+      /Warning: Received `%s` for a non-boolean attribute `%s`/.test(args[0]) ||
+      /Warning: validateDOMNesting/.test(args[0]) ||
+      /Warning: useLayoutEffect does nothing on the server/.test(args[0])
     ) {
       return;
     }
-    originalConsoleError(...args);
-  });
-
-  // Suppress React Router future flag warnings
-  jest.spyOn(console, 'warn').mockImplementation((...args) => {
-    if (typeof args[0] === 'string' && args[0].includes('React Router Future Flag')) {
-      return;
-    }
-    originalConsoleWarn(...args);
-  });
+    originalError(...args);
+  };
 });
 
 // Mock framer-motion components to avoid animation issues in tests
-jest.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, ...props }: any) => React.createElement('div', props, children),
-    // Add other motion components as needed
+jest.mock('framer-motion', () => {
+  const motionProxy = new Proxy({}, {
+    get: (target, property) => {
+      return ({ children, ...props }: any) => React.createElement(property as string, props, children);
+    },
+  });
+
+  return {
+    motion: motionProxy,
+    AnimatePresence: ({ children }: { children: React.ReactNode }) =>
+      React.createElement(React.Fragment, null, children),
+  };
+});
+
+// Mock react-type-animation
+jest.mock('react-type-animation', () => ({
+  TypeAnimation: ({ sequence, wrapper = 'span', ...props }: any) => {
+    // Just render the first non-number item in the sequence for testing
+    const text = sequence.find((item: any) => typeof item === 'string');
+    return React.createElement(wrapper, props, text || '');
   },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => 
-    React.createElement(React.Fragment, null, children),
 }));
 
 // Mock react-vertical-timeline-component with proper prop handling
@@ -82,30 +99,16 @@ jest.mock('react-vertical-timeline-component', () => ({
     iconStyle?: React.CSSProperties;
     icon?: React.ReactNode;
     [key: string]: any;
-  }) => {
-    const safeProps = { ...props };
-    delete safeProps.animate;
-    delete safeProps.className;
-    
-    return React.createElement(
-      'div',
-      {
-        ...safeProps,
-        'data-testid': 'timeline-element',
-        'data-content-style': contentStyle ? 'has-content-style' : undefined,
-        'data-content-arrow-style': contentArrowStyle ? 'has-arrow-style' : undefined,
-        'data-icon-style': iconStyle ? 'has-icon-style' : undefined,
-      },
-      [
-        icon && React.createElement('div', { key: 'icon', 'data-testid': 'timeline-icon' }, icon),
-        children,
-      ].filter(Boolean)
-    );
-  },
+  }) =>
+    React.createElement('div', { 'data-testid': 'vertical-timeline-element', ...props }, children),
 }));
 
 afterAll(() => {
   // Restore original console methods
   console.warn = originalConsoleWarn;
   console.error = originalConsoleError;
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
 });
