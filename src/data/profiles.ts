@@ -51,6 +51,14 @@ export const profiles: Profile[] = [
     category: 'Portfolio',
     description: 'My curated data science projects and case studies',
   },
+  {
+    name: 'Hugging Face',
+    url: 'https://huggingface.co/ayushrai02',
+    icon: 'robot',
+    domain: 'data-science',
+    category: 'AI/ML Models',
+    description: 'Check out my AI models and contributions on Hugging Face',
+  },
 
   // Design & Creative
   {
