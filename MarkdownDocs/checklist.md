@@ -5,19 +5,19 @@
 ## Pre-Development
 
 - [x] Define project scope and requirements (PRD completed).
-- [x] Choose the technology stack (Next.js, Tailwind CSS, TypeScript, Framer Motion).
+- [x] Choose the technology stack (Vite + React, Tailwind CSS, TypeScript, Framer Motion).
 - [x] Create sitemap and wireframes.
 - [x] Set up version control (Git & GitHub).
 - [x] Define folder architecture and coding standards.
 - [ ] Configure CI/CD pipeline (Vercel/Netlify + GitHub Actions).
 - [ ] Set up environment variables (API keys, CMS credentials).
-- [ ] Install and configure dependencies (Next.js, Tailwind, Framer Motion, Three.js, Chart.js).
+- [x] Install and configure dependencies (Vite + React, Tailwind, Framer Motion, React Router, Jest).
 
 ---
 
 ## Core Functionality
 
-- [ ] **Hero Section**
+- [x] **Hero Section**
   - [x] Dynamic text rotation for headlines.
   - [x] Animated counters for statistics.
   - [x] Status indicator component with color-coded labels.
@@ -85,11 +85,11 @@
   - [x] Download feature (PDF/Word).
   - [ ] Real-time update sync with CMS.
 
-- [ ] **Contact Section**
-  - [ ] Contact form with validation.
+- [x] **Contact Section**
+  - [x] Contact form with validation.
   - [ ] Serverless function for form submissions.
   - [ ] Calendar integration (Calendly/Google Calendar).
-  - [ ] Direct email and social media links.
+  - [x] Direct email and social media links.
 
 ---
 

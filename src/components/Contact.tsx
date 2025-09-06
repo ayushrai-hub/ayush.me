@@ -1,30 +1,59 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { contactData } from '../data/contact';
-import { Mail, Phone, MapPin, Linkedin, Github, Send, Twitter, Instagram } from 'lucide-react';
+import { trackContactForm } from '../hooks/useAnalytics';
+import { Mail, Phone, MapPin, Linkedin, Github, Send, Twitter, Instagram, AlertCircle, CheckCircle } from 'lucide-react';
+
+// Zod schema for form validation
+const contactSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  contactType: z.string().min(1, 'Please select how we can help you'),
+  message: z.string().min(10, 'Message must be at least 10 characters').max(1000, 'Message must be less than 1000 characters'),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '', email: '', message: '', contactType: ''
-  });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [serverError, setServerError] = useState<string>('');
 
-  const handleChange = (e: React.ChangeEvent<any>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    mode: 'onBlur',
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: ContactFormData) => {
     setStatus('sending');
+    setServerError('');
+
     try {
-      // Replace with actual form submission
-      console.log('Form submitted:', formData);
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Simulate form submission - replace with actual API call
+      console.log('Form submitted:', data);
+
+      // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      // Simulate random success/failure for testing
+      if (Math.random() > 0.9) {
+        throw new Error('Network error occurred');
+      }
+
       setStatus('success');
-      setFormData({ name: '', email: '', message: '', contactType: '' });
+      trackContactForm(data.contactType);
+      reset();
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Submission error:', error);
       setStatus('error');
+      setServerError(error instanceof Error ? error.message : 'An unexpected error occurred');
     }
   };
 
@@ -138,7 +167,7 @@ const Contact = () => {
                   {contactData.form.errorMessage}
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Full Name *
@@ -146,12 +175,17 @@ const Contact = () => {
                     <input
                       type="text"
                       id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                      {...register('name')}
+                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white ${
+                        errors.name ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                      }`}
                     />
+                    {errors.name && (
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
+                        <AlertCircle size={14} />
+                        {errors.name.message}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -161,12 +195,17 @@ const Contact = () => {
                     <input
                       type="email"
                       id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                      {...register('email')}
+                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white ${
+                        errors.email ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                      }`}
                     />
+                    {errors.email && (
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
+                        <AlertCircle size={14} />
+                        {errors.email.message}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -175,11 +214,10 @@ const Contact = () => {
                     </label>
                     <select
                       id="contactType"
-                      name="contactType"
-                      value={formData.contactType}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                      {...register('contactType')}
+                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white ${
+                        errors.contactType ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                      }`}
                     >
                       <option value="">Select an option</option>
                       {contactData.form.fields
@@ -190,6 +228,12 @@ const Contact = () => {
                           </option>
                         ))}
                     </select>
+                    {errors.contactType && (
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
+                        <AlertCircle size={14} />
+                        {errors.contactType.message}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -198,21 +242,26 @@ const Contact = () => {
                     </label>
                     <textarea
                       id="message"
-                      name="message"
                       rows={4}
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                      {...register('message')}
+                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white ${
+                        errors.message ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                      }`}
                     />
+                    {errors.message && (
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
+                        <AlertCircle size={14} />
+                        {errors.message.message}
+                      </p>
+                    )}
                   </div>
 
                   <button
                     type="submit"
-                    disabled={status === 'sending'}
+                    disabled={isSubmitting}
                     className="w-full flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 transition-colors"
                   >
-                    {status === 'sending' ? (
+                    {isSubmitting ? (
                       'Sending...'
                     ) : (
                       <>
