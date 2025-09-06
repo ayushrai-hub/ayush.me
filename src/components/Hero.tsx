@@ -26,8 +26,48 @@ const Hero = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="relative bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-50 py-20 min-h-screen flex items-center justify-center"
+      className="relative overflow-hidden bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-50 py-20 min-h-screen flex items-center justify-center"
     >
+      {/* CSS-Based Particle Animation */}
+      <div className="absolute inset-0">
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-electric-blue/20 rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${2 + Math.random() * 3}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Floating geometric shapes */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-16 h-16 border border-electric-blue/10 rounded-lg"
+            animate={{
+              x: [0, 100, -50, 0],
+              y: [0, -80, 60, 0],
+              rotate: [0, 90, 180, 270, 0],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 20 + i * 2,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            style={{
+              left: `${20 + i * 10}%`,
+              top: `${10 + i * 8}%`,
+            }}
+          />
+        ))}
+      </div>
       <div className="container mx-auto text-center">
         <div className="mb-4 flex justify-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-50/70 dark:bg-emerald-500/10 px-3 py-1 text-sm text-emerald-700 dark:text-emerald-300">

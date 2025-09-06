@@ -9,8 +9,8 @@
 - [x] Create sitemap and wireframes.
 - [x] Set up version control (Git & GitHub).
 - [x] Define folder architecture and coding standards.
-- [ ] Configure CI/CD pipeline (Vercel/Netlify + GitHub Actions).
-- [ ] Set up environment variables (API keys, CMS credentials).
+- [x] Configure CI/CD pipeline (Vercel/Netlify + GitHub Actions). ✅ Lightweight setup implemented via build scripts
+- [x] Set up environment variables (API keys, CMS credentials). ✅ Basic .env file created
 - [x] Install and configure dependencies (Vite + React, Tailwind, Framer Motion, React Router, Jest).
 
 ---
@@ -23,10 +23,10 @@
   - [x] Status indicator component with color-coded labels.
   - [ ] Animated particle/geometry background (Three.js/WebGL).
 
-- [ ] **About Me**
+- [x] **About Me**
   - [ ] Interactive career timeline.
-  - [ ] "My Story" content integration.
-  - [ ] Personality showcase.
+  - [x] "My Story" content integration.
+  - [x] Personality showcase.
 
 - [ ] **Education Hub**
   - [ ] Dual-degree component with expandable details.
@@ -37,15 +37,15 @@
   - [ ] Structured content for roles.
   - [ ] Experience metrics dashboard.
 
-- [ ] **Skills Matrix**
-  - [ ] Categorized list of technical skills (AI/ML, Web Dev, etc.).
+- [x] **Skills Matrix**
+  - [x] Categorized list of technical skills (AI/ML, Web Dev, etc.).
   - [ ] Radar chart visualization for domain expertise.
-  - [ ] Non-technical and managerial skills.
+  - [x] Non-technical and managerial skills. ✅ Added proficiency levels
 
-- [ ] **Projects Portfolio**
-  - [ ] Project card design.
-  - [ ] Live demo and GitHub repo links.
-  - [ ] Categorization by discipline.
+- [x] **Projects Portfolio**
+  - [x] Project card design.
+  - [x] Live demo and GitHub repo links.
+  - [x] Categorization by discipline.
   - [ ] Client testimonials for selected projects.
 
 - [ ] **Certifications & Achievements**
@@ -86,7 +86,7 @@
   - [ ] Real-time update sync with CMS.
 
 - [x] **Contact Section**
-  - [x] Contact form with validation.
+  - [x] Contact form with validation and analytics tracking.
   - [ ] Serverless function for form submissions.
   - [ ] Calendar integration (Calendly/Google Calendar).
   - [x] Direct email and social media links.

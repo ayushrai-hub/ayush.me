@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ayush.me/sitemap.xml
+
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /api/
+Disallow: *.json
